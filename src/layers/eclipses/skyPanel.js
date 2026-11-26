@@ -4,6 +4,21 @@
  * says what to show (see skyViewAt); this module only paints it.
  */
 
+import { h, render } from 'vue';
+import UiCloseButton from '../../ui/kit/UiCloseButton.vue';
+
+const CLOSER_STYLE = Object.freeze({
+  width: '22px',
+  height: '22px',
+  padding: '0',
+  cursor: 'pointer',
+  borderRadius: '50%',
+  border: '1px solid rgba(255, 255, 255, 0.28)',
+  background: 'rgba(7, 12, 20, 0.62)',
+  color: '#ffffff',
+  font: '15px/1 system-ui, sans-serif',
+});
+
 const SIZE = 176;
 /** The Sun's radius as a share of the picture's side. */
 const SUN_SHARE = 30 / SIZE;
@@ -485,27 +500,29 @@ export function createSkyPanel(
   const body = document.createElement('div');
   body.style.whiteSpace = 'pre-line';
   caption.append(title, body);
-  // The one part of the view that takes the pointer.
-  const closer = document.createElement('button');
-  closer.type = 'button';
-  closer.className = 'eclipse-sky-view-close';
-  closer.textContent = '×';
+  // The one part of the view that takes the pointer: the kit's close button.
+  const closer = document.createElement('div');
+  closer.className = 'eclipse-sky-view-close-host';
   Object.assign(closer.style, {
     position: 'absolute',
     top: '6px',
     right: '6px',
-    width: '22px',
-    height: '22px',
-    padding: '0',
     pointerEvents: 'auto',
-    cursor: 'pointer',
-    borderRadius: '50%',
-    border: '1px solid rgba(255, 255, 255, 0.28)',
-    background: 'rgba(7, 12, 20, 0.62)',
-    color: '#ffffff',
-    font: '15px/1 system-ui, sans-serif',
   });
-  closer.addEventListener('click', () => onClose?.());
+  let closeLabel = '';
+  const drawCloser = () =>
+    render(
+      h(UiCloseButton, {
+        label: closeLabel || 'Close',
+        title: closeLabel || undefined,
+        bare: true,
+        class: 'eclipse-sky-view-close',
+        style: CLOSER_STYLE,
+        onClick: () => onClose?.(),
+      }),
+      closer,
+    );
+  drawCloser();
   canvas.setAttribute('role', 'img');
   root.append(canvas, caption, closer);
   container.append(root);
@@ -518,9 +535,9 @@ export function createSkyPanel(
      */
     show({ view, title: heading, lines, close = '' }) {
       root.hidden = false;
-      if (closer.title !== close) {
-        closer.title = close;
-        closer.setAttribute('aria-label', close);
+      if (closeLabel !== close) {
+        closeLabel = close;
+        drawCloser();
       }
       const text = lines.join('\n');
       if (title.textContent !== heading) title.textContent = heading;

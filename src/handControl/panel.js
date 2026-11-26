@@ -11,6 +11,8 @@
  *
  * @module handControl/panel
  */
+import { h, render } from 'vue';
+import UiIcon from '../ui/kit/UiIcon.vue';
 import { t } from '../i18n/index.js';
 import {
   CALIBRATED_KEYS,
@@ -105,6 +107,13 @@ function readSensitivity() {
   }
 }
 
+/** A kit glyph (UiIcon) in a span of its own, for this script-built panel. */
+function kitIcon(name, attrs = {}) {
+  const host = el('span', { 'aria-hidden': 'true', ...attrs });
+  render(h(UiIcon, { name, size: null }), host);
+  return host;
+}
+
 function el(tag, attrs = {}, children = []) {
   const node = document.createElement(tag);
   for (const [key, value] of Object.entries(attrs)) {
@@ -178,11 +187,9 @@ export function initHandControl({
     class: 'gev-hands__status',
     'aria-live': 'polite',
   });
-  const mic = el('span', {
-    class: 'gev-hands__mic material-symbols-outlined',
+  const mic = kitIcon('mic', {
+    class: 'gev-hands__mic',
     title: t('Microphone'),
-    'aria-hidden': 'true',
-    text: 'mic',
   });
   const slider = el('input', {
     class: 'gev-quantitative-slider pp-slider gev-hands__slider',
@@ -202,13 +209,7 @@ export function initHandControl({
       title: t('Close'),
       'aria-label': t('Close'),
     },
-    [
-      el('span', {
-        class: 'material-symbols-outlined',
-        'aria-hidden': 'true',
-        text: 'close',
-      }),
-    ],
+    [kitIcon('close')],
   );
   const calibrate = el('button', {
     class: 'gev-hands__btn',
@@ -266,11 +267,7 @@ export function initHandControl({
     'header',
     { class: 'gev-hands__header', title: t('Drag to move') },
     [
-      el('span', {
-        class: 'material-symbols-outlined',
-        'aria-hidden': 'true',
-        text: 'back_hand',
-      }),
+      kitIcon('back_hand'),
       el('span', { class: 'gev-hands__title', text: t('Hand control') }),
       mic,
       close,
@@ -337,7 +334,7 @@ export function initHandControl({
   const renderMic = () => {
     const on = gestureTalkListening();
     mic.classList.toggle('is-on', on);
-    mic.textContent = on ? 'mic' : 'mic_off';
+    render(h(UiIcon, { name: on ? 'mic' : 'mic_off', size: null }), mic);
   };
 
   function draw(intent) {

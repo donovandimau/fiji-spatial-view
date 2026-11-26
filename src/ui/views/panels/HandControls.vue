@@ -2,6 +2,7 @@
 import { storeToRefs } from 'pinia';
 import { t } from '../../../i18n/index.js';
 import UiButton from '../../kit/UiButton.vue';
+import UiIcon from '../../kit/UiIcon.vue';
 import { useDisplayStore } from '../../stores/display.js';
 
 // UTILITIES ▸ Hands: turns the webcam hand control on and off. The panel
@@ -14,7 +15,7 @@ const { hands } = storeToRefs(display);
 <template>
   <div class="pp-toggle-group" id="hand-control-group">
     <UiButton class="pp-toggle-btn" :pressed="hands?.active ?? false" pressed-class="active" id="hand-control-toggle" @click="display.act('toggleHands')" :title="t('Hand control — steer the map with gestures seen by the webcam')">
-      <span class="pp-icon material-symbols-outlined" aria-hidden="true">back_hand</span>
+      <UiIcon class="pp-icon" name="back_hand" :size="null" />
       <span class="pp-label">{{ t('Hands') }}</span>
     </UiButton>
   </div>
