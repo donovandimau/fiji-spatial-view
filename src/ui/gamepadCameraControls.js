@@ -81,8 +81,8 @@ export function installGamepadCameraControls(
   } = {},
 ) {
   const canvas = viewer?.scene?.canvas;
-  if (!canvas || !viewer?.camera)
-    throw new TypeError('A complete Cesium viewer is required');
+  // Renderers without a Cesium canvas and camera get no globe navigation.
+  if (!canvas || !viewer?.camera) return () => {};
 
   const originalTabIndex = canvas.tabIndex;
   if (canvas.tabIndex < 0) canvas.tabIndex = 0;
