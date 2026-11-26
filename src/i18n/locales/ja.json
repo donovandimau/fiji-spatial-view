@@ -4645,5 +4645,16 @@
   "Default thresholds restored": "既定のしきい値に戻しました",
   "Hand control — steer the map with gestures seen by the webcam": "ハンドコントロール — ウェブカメラが見るジェスチャーで地図を操作",
   "Hands": "手",
-  "Show 🤙 again to send": "送信するにはもう一度 🤙 を見せてください"
+  "Show 🤙 again to send": "送信するにはもう一度 🤙 を見せてください",
+  "Last 30 days": "過去 30 日",
+  "Last 12 months": "過去 12 か月",
+  "Older": "それ以前",
+  "Estimated impact energy {kt} kt TNT": "推定衝突エネルギー {kt} kt TNT",
+  "Radiated energy {energy} × 10¹⁰ J": "放射エネルギー {energy} × 10¹⁰ J",
+  "Peak brightness at {km} km": "最大光度の高度 {km} km",
+  "Speed {speed} km/s": "速度 {speed} km/s",
+  "Fireball {time}": "火球 {time}",
+  "Bright meteors and bolides detected by U.S. Government sensors since 1988, from NASA/JPL CNEOS, drawn where each was brightest (at that height when known) and sized by estimated impact energy. Events are posted days to weeks after they happen, and many smaller fireballs are never reported.": "1988 年以降に米国政府のセンサーが捉えた明るい流星や火球（NASA/JPL CNEOS）。最も明るくなった地点（わかる場合はその高度）に描画し、推定衝突エネルギーで大きさを変えています。発生から数日〜数週間後に公開され、小さな火球の多くは報告されません。",
+  "Fireballs": "火球",
+  "fireball": "火球"
 }

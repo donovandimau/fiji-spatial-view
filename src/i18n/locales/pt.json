@@ -4861,5 +4861,16 @@
   "Hand control — steer the map with gestures seen by the webcam": "Controle por gestos — mova o mapa com as mãos pela webcam",
   "Hands": "Mãos",
   "Show 🤙 again to send": "Faça 🤙 de novo para enviar",
-  "👍 thumb sideways: orbit": "👍 polegar de lado: órbita"
+  "👍 thumb sideways: orbit": "👍 polegar de lado: órbita",
+  "Last 30 days": "Últimos 30 dias",
+  "Last 12 months": "Últimos 12 meses",
+  "Older": "Mais antigos",
+  "Estimated impact energy {kt} kt TNT": "Energia de impacto estimada {kt} kt de TNT",
+  "Radiated energy {energy} × 10¹⁰ J": "Energia irradiada {energy} × 10¹⁰ J",
+  "Peak brightness at {km} km": "Brilho máximo a {km} km",
+  "Speed {speed} km/s": "Velocidade {speed} km/s",
+  "Fireball {time}": "Bólido {time}",
+  "Bright meteors and bolides detected by U.S. Government sensors since 1988, from NASA/JPL CNEOS, drawn where each was brightest (at that height when known) and sized by estimated impact energy. Events are posted days to weeks after they happen, and many smaller fireballs are never reported.": "Meteoros brilhantes e bólidos detectados por sensores do governo dos EUA desde 1988, da NASA/JPL CNEOS, desenhados onde foram mais brilhantes (nessa altitude, quando conhecida) e dimensionados pela energia de impacto estimada. Os eventos são publicados dias ou semanas depois, e muitos bólidos menores nunca são relatados.",
+  "Fireballs": "Bólidos",
+  "fireball": "bólido"
 }

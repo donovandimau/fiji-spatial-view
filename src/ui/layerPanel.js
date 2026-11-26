@@ -78,6 +78,7 @@ const PANEL_GROUPS = [
       'gnss-integrity',
       's2-ghostmaps',
       'shipwrecks',
+      'fireballs',
       'news',
     ],
   },

@@ -4861,5 +4861,16 @@
   "Point at the sky": "הצבעה אל השמיים",
   "Selected ({label})": "נבחר ({label})",
   "Selected": "נבחר",
-  "No visible ISS pass found in the next 48 hours yet.": "עדיין לא נמצא מעבר גלוי של ISS ב-48 השעות הבאות."
+  "No visible ISS pass found in the next 48 hours yet.": "עדיין לא נמצא מעבר גלוי של ISS ב-48 השעות הבאות.",
+  "Last 30 days": "30 הימים האחרונים",
+  "Last 12 months": "12 החודשים האחרונים",
+  "Older": "ישנים יותר",
+  "Estimated impact energy {kt} kt TNT": "אנרגיית פגיעה משוערת {kt} קילוטון TNT",
+  "Radiated energy {energy} × 10¹⁰ J": "אנרגיה שנפלטה {energy} × 10¹⁰ ג׳ול",
+  "Peak brightness at {km} km": "שיא בהירות בגובה {km} ק״מ",
+  "Speed {speed} km/s": "מהירות {speed} ק״מ/ש׳",
+  "Fireball {time}": "כדור אש {time}",
+  "Bright meteors and bolides detected by U.S. Government sensors since 1988, from NASA/JPL CNEOS, drawn where each was brightest (at that height when known) and sized by estimated impact energy. Events are posted days to weeks after they happen, and many smaller fireballs are never reported.": "מטאורים בהירים ובולידים שזוהו בחיישני ממשלת ארה״ב מאז 1988, מ־NASA/JPL CNEOS, מצוירים במקום שבו היו בהירים ביותר (בגובה זה כשהוא ידוע) ובגודל לפי אנרגיית הפגיעה המשוערת. האירועים מתפרסמים ימים עד שבועות לאחר מכן, ורבים מכדורי האש הקטנים אינם מדווחים לעולם.",
+  "Fireballs": "כדורי אש",
+  "fireball": "כדור אש"
 }
