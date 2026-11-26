@@ -88,6 +88,14 @@ export const useDisplayStore = defineStore('gev-display', () => {
     draw.value = markRaw(next);
   }
 
+  /** The Hands toggle; null until hand control first renders. */
+  const hands = shallowRef(null);
+
+  /** @param {{active: boolean}} next Whether hand control is on. */
+  function publishHands(next) {
+    hands.value = markRaw(next);
+  }
+
   /** The imported files and hint; null until the file import renders. */
   const geoImport = shallowRef(null);
 
@@ -182,6 +190,8 @@ export const useDisplayStore = defineStore('gev-display', () => {
     publishFrameRate,
     draw,
     publishDraw,
+    hands,
+    publishHands,
     geoImport,
     publishGeoImport,
     style,
