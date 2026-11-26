@@ -4581,5 +4581,22 @@
   "Fireball {time}": "火球 {time}",
   "Bright meteors and bolides detected by U.S. Government sensors since 1988, from NASA/JPL CNEOS, drawn where each was brightest (at that height when known) and sized by estimated impact energy. Events are posted days to weeks after they happen, and many smaller fireballs are never reported.": "1988 年以降に米国政府のセンサーが捉えた明るい流星や火球（NASA/JPL CNEOS）。最も明るくなった地点（わかる場合はその高度）に描画し、推定衝突エネルギーで大きさを変えています。発生から数日〜数週間後に公開され、小さな火球の多くは報告されません。",
   "Fireballs": "火球",
-  "fireball": "火球"
+  "fireball": "火球",
+  "Rising": "上昇中",
+  "Falling": "下降中",
+  "Not heard for 15+ min": "15 分以上受信なし",
+  "Altitude {km} km": "高度 {km} km",
+  "Rising {rate} m/s": "上昇 {rate} m/s",
+  "Falling {rate} m/s": "下降 {rate} m/s",
+  "Drifting {speed} km/h": "漂流 {speed} km/h",
+  "Temperature {temp} °C": "気温 {temp} °C",
+  "Humidity {humidity}%": "湿度 {humidity}%",
+  "Pressure {hpa} hPa": "気圧 {hpa} hPa",
+  "Last heard {time} UTC": "最終受信 {time} UTC",
+  "Predicted landing {time} UTC": "予測着地 {time} UTC",
+  "Radiosonde {serial}": "ラジオゾンデ {serial}",
+  "Reconnecting to the live feed": "ライブフィードに再接続中",
+  "Radiosondes (weather balloons) heard in the last three hours by volunteer receiving stations, from SondeHub, drawn at their reported altitude. National weather services launch them twice a day, mostly near 00:00 and 12:00 UTC. Select one for its readings and SondeHub’s predicted path and landing. Coverage is only where volunteers listen, and sensor readings are uncalibrated.": "過去 3 時間にボランティアの受信局が捉えたラジオゾンデ（気象観測気球）。SondeHub のデータを報告高度に描画します。各国の気象機関が 1 日 2 回、主に 00:00 と 12:00 UTC ごろに放球します。選択すると観測値と、SondeHub が予測した経路・着地点を表示します。受信範囲はボランティアが聞いている地域に限られ、センサー値は未校正です。",
+  "radiosonde": "ラジオゾンデ",
+  "Weather Balloons": "気象観測気球"
 }

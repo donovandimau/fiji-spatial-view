@@ -96,6 +96,7 @@ const PANEL_GROUPS = [
       'weather-lightning',
       'weather-cyclones',
       'aurora',
+      'radiosondes',
     ],
   },
   // Directions renders in the Utilities panel, beside Draw and Import, and

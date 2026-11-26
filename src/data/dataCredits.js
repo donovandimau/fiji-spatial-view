@@ -574,6 +574,8 @@ export const DATA_CREDITS = [
     html: 'Aurora forecast (OVATION), Kp index, space-weather scales and solar wind: <a href="https://www.swpc.noaa.gov/" target="_blank" rel="noopener">NOAA Space Weather Prediction Center</a> (U.S. Government work, public domain)',
     key: 'fireballs',
     html: 'Fireballs: <a href="https://cneos.jpl.nasa.gov/fireballs/" target="_blank" rel="noopener">NASA/JPL Center for Near Earth Object Studies</a> fireball and bolide reports, from U.S. Government sensors',
+    key: 'radiosondes',
+    html: 'Weather balloons: <a href="https://sondehub.org/" target="_blank" rel="noopener">SondeHub</a> radiosonde telemetry and predictions, received by volunteer stations (<a href="https://creativecommons.org/licenses/by-sa/2.0/" target="_blank" rel="noopener">CC BY-SA 2.0</a>)',
   },
   {
     key: 'weather-cyclones',

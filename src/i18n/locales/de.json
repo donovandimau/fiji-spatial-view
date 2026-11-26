@@ -4686,5 +4686,22 @@
   "Fireball {time}": "Feuerkugel {time}",
   "Bright meteors and bolides detected by U.S. Government sensors since 1988, from NASA/JPL CNEOS, drawn where each was brightest (at that height when known) and sized by estimated impact energy. Events are posted days to weeks after they happen, and many smaller fireballs are never reported.": "Helle Meteore und Boliden, von Sensoren der US-Regierung seit 1988 erfasst, aus NASA/JPL CNEOS. Dargestellt dort, wo sie am hellsten waren (in dieser Höhe, wenn bekannt), Größe nach geschätzter Einschlagenergie. Ereignisse werden Tage bis Wochen später veröffentlicht, und viele kleinere Feuerkugeln werden nie gemeldet.",
   "Fireballs": "Feuerkugeln",
-  "fireball": "Feuerkugel"
+  "fireball": "Feuerkugel",
+  "Rising": "Steigend",
+  "Falling": "Sinkend",
+  "Not heard for 15+ min": "Seit 15+ Min. nicht empfangen",
+  "Altitude {km} km": "Höhe {km} km",
+  "Rising {rate} m/s": "Steigt {rate} m/s",
+  "Falling {rate} m/s": "Sinkt {rate} m/s",
+  "Drifting {speed} km/h": "Drift {speed} km/h",
+  "Temperature {temp} °C": "Temperatur {temp} °C",
+  "Humidity {humidity}%": "Luftfeuchte {humidity} %",
+  "Pressure {hpa} hPa": "Luftdruck {hpa} hPa",
+  "Last heard {time} UTC": "Zuletzt empfangen {time} UTC",
+  "Predicted landing {time} UTC": "Vorhergesagte Landung {time} UTC",
+  "Radiosonde {serial}": "Radiosonde {serial}",
+  "Reconnecting to the live feed": "Verbindung zum Live-Feed wird wiederhergestellt",
+  "Radiosondes (weather balloons) heard in the last three hours by volunteer receiving stations, from SondeHub, drawn at their reported altitude. National weather services launch them twice a day, mostly near 00:00 and 12:00 UTC. Select one for its readings and SondeHub’s predicted path and landing. Coverage is only where volunteers listen, and sensor readings are uncalibrated.": "Radiosonden (Wetterballone), in den letzten drei Stunden von ehrenamtlichen Empfangsstationen gehört, aus SondeHub, in ihrer gemeldeten Höhe dargestellt. Wetterdienste starten sie zweimal täglich, meist gegen 00:00 und 12:00 UTC. Wähle eine aus für ihre Messwerte sowie die von SondeHub vorhergesagte Bahn und Landung. Abdeckung nur dort, wo Freiwillige empfangen; die Sensorwerte sind unkalibriert.",
+  "radiosonde": "Radiosonde",
+  "Weather Balloons": "Wetterballone"
 }

@@ -140,6 +140,12 @@ const KINDS = Object.freeze({
   news: { kind: msg('news report'), icon: 'newspaper' },
   shipwrecks: { kind: msg('shipwreck'), icon: 'directions_boat' },
   fireballs: { kind: msg('fireball'), icon: 'local_fire_department' },
+  radiosondes: {
+    kind: msg('radiosonde'),
+    icon: 'air',
+    moving: true,
+    headline: ['altitudeM', 'verticalRateMps'],
+  },
 });
 
 /** Fields a record may name itself by, best first. */

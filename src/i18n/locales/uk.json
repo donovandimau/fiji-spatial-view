@@ -4896,5 +4896,22 @@
   "Fireball {time}": "Болід {time}",
   "Bright meteors and bolides detected by U.S. Government sensors since 1988, from NASA/JPL CNEOS, drawn where each was brightest (at that height when known) and sized by estimated impact energy. Events are posted days to weeks after they happen, and many smaller fireballs are never reported.": "Яскраві метеори й боліди, зафіксовані датчиками уряду США з 1988 року, за даними NASA/JPL CNEOS. Показані там, де вони були найяскравіші (на цій висоті, якщо вона відома), розмір — за оцінкою енергії удару. Події публікуються через дні чи тижні, а багато менших болідів не потрапляють у звіти.",
   "Fireballs": "Боліди",
-  "fireball": "болід"
+  "fireball": "болід",
+  "Rising": "Набирають висоту",
+  "Falling": "Знижуються",
+  "Not heard for 15+ min": "Немає сигналу 15+ хв",
+  "Altitude {km} km": "Висота {km} км",
+  "Rising {rate} m/s": "Підйом {rate} м/с",
+  "Falling {rate} m/s": "Зниження {rate} м/с",
+  "Drifting {speed} km/h": "Дрейф {speed} км/год",
+  "Temperature {temp} °C": "Температура {temp} °C",
+  "Humidity {humidity}%": "Вологість {humidity}%",
+  "Pressure {hpa} hPa": "Тиск {hpa} гПа",
+  "Last heard {time} UTC": "Останній прийом {time} UTC",
+  "Predicted landing {time} UTC": "Прогноз приземлення {time} UTC",
+  "Radiosonde {serial}": "Радіозонд {serial}",
+  "Reconnecting to the live feed": "Повторне підключення до живого потоку",
+  "Radiosondes (weather balloons) heard in the last three hours by volunteer receiving stations, from SondeHub, drawn at their reported altitude. National weather services launch them twice a day, mostly near 00:00 and 12:00 UTC. Select one for its readings and SondeHub’s predicted path and landing. Coverage is only where volunteers listen, and sensor readings are uncalibrated.": "Радіозонди (метеозонди), прийняті за останні три години станціями волонтерів, за даними SondeHub, показані на повідомленій висоті. Метеослужби запускають їх двічі на добу, переважно близько 00:00 і 12:00 UTC. Виберіть зонд, щоб побачити його показання й прогноз траєкторії та приземлення від SondeHub. Покриття є лише там, де слухають волонтери, а показання датчиків не відкалібровані.",
+  "radiosonde": "радіозонд",
+  "Weather Balloons": "Метеозонди"
 }

@@ -1661,6 +1661,29 @@ forecast's valid time. A failed refresh keeps the last forecast drawn with the
 error in the row; stats turn stale after 30 minutes without a new run. OVATION
 is the chance of aurora overhead, not of seeing it: it says nothing about
 daylight or cloud. Voice control does not name the layer yet.
+Weather Balloons (`radiosondes`, default off, Weather group, share token `03`)
+shows radiosondes that volunteer stations hear, from SondeHub. SondeHub asks
+clients not to poll its API, so the browser reads only the local mirror,
+`/api/sondehub/latest`, every 15 seconds. On its first request in a session the
+mirror reads `api.v2.sondehub.org/sondes?last=10800` once, then follows the
+live MQTT-over-WebSocket `batch` topic (`server/providers/sondehubMqtt.js`, a
+subscribe-only MQTT 3.1.1 client on Node's WebSocket; no dependency), keeping
+the newest frame per serial and dropping frames over three hours old. Ten
+minutes after the last browser request it disconnects, and the next session
+lists again; a dropped feed reconnects with backoff from 5 seconds to 5
+minutes. Receiver callsigns, station positions and antennas are dropped on
+arrival. A sonde is drawn at its reported altitude (on the ground without one),
+over depth and culled past the horizon, coloured rising (vertical speed ≥ 1
+m/s), falling (≤ −1 m/s) or not heard for 15 minutes; the legend counts each.
+Selecting one shows its card (altitude, climb or descent rate, drift speed,
+temperature, humidity, pressure, model and frequency, last-heard time) and
+asks `/api/sondehub/prediction?serial=…`, which the mirror fetches from
+SondeHub's predictor and caches for two minutes; the forecast is drawn as a
+3D path from the balloon to a landing cross with the predicted landing time.
+Activating the card opens the sonde on the SondeHub tracker. Context lists the
+sondes by serial with altitude and vertical rate. Coverage is only where
+volunteers listen, and SondeHub calls the sensor readings uncalibrated. Voice
+control does not name the layer yet.
 
 Voice and HUD snapshots reuse the existing feedState classifier. Analyst follow-ups retain their original data provenance; current-view results append provenance without replacing legacy fields. HUD context and deterministic telemetry include non-nominal feed state.
 

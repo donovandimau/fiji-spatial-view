@@ -19,6 +19,7 @@ import { createAlprTileSource } from '../layers/alpr/source.js';
 import { createWeatherSource } from '../layers/weather/source.js';
 import { createCycloneSource } from '../layers/cyclones/source.js';
 import { createAuroraSource } from '../layers/aurora/source.js';
+import { createSondeSource } from '../layers/radiosondes/source.js';
 import { createWindSource } from '../layers/wind/source.js';
 import { createFirmsSource } from '../layers/firms/source.js';
 import { createGhostMapsSource } from '../layers/ghostMaps/source.js';
@@ -79,6 +80,8 @@ export function createStandaloneLayerSources(
     cyclones: createCycloneSource(),
     // NOAA SWPC answers browsers directly, keyless.
     aurora: createAuroraSource(),
+    // Same-origin /api/sondehub: the local server mirrors SondeHub's live feed.
+    radiosondes: createSondeSource(),
     mapillary: createMapillarySource({
       token: import.meta.env?.MAPILLARY_CLIENT_TOKEN || '',
     }),

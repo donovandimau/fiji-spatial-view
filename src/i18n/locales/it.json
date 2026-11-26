@@ -4791,5 +4791,22 @@
   "Fireball {time}": "Bolide {time}",
   "Bright meteors and bolides detected by U.S. Government sensors since 1988, from NASA/JPL CNEOS, drawn where each was brightest (at that height when known) and sized by estimated impact energy. Events are posted days to weeks after they happen, and many smaller fireballs are never reported.": "Meteore luminose e bolidi rilevati dai sensori del governo statunitense dal 1988, da NASA/JPL CNEOS, disegnati dove sono stati più luminosi (a quella quota, se nota) e dimensionati in base all’energia d’impatto stimata. Gli eventi vengono pubblicati giorni o settimane dopo e molti bolidi minori non vengono mai segnalati.",
   "Fireballs": "Bolidi",
-  "fireball": "bolide"
+  "fireball": "bolide",
+  "Rising": "In salita",
+  "Falling": "In discesa",
+  "Not heard for 15+ min": "Non ricevuta da 15+ min",
+  "Altitude {km} km": "Quota {km} km",
+  "Rising {rate} m/s": "Sale a {rate} m/s",
+  "Falling {rate} m/s": "Scende a {rate} m/s",
+  "Drifting {speed} km/h": "Deriva {speed} km/h",
+  "Temperature {temp} °C": "Temperatura {temp} °C",
+  "Humidity {humidity}%": "Umidità {humidity}%",
+  "Pressure {hpa} hPa": "Pressione {hpa} hPa",
+  "Last heard {time} UTC": "Ultima ricezione {time} UTC",
+  "Predicted landing {time} UTC": "Atterraggio previsto {time} UTC",
+  "Radiosonde {serial}": "Radiosonda {serial}",
+  "Reconnecting to the live feed": "Riconnessione al feed in diretta",
+  "Radiosondes (weather balloons) heard in the last three hours by volunteer receiving stations, from SondeHub, drawn at their reported altitude. National weather services launch them twice a day, mostly near 00:00 and 12:00 UTC. Select one for its readings and SondeHub’s predicted path and landing. Coverage is only where volunteers listen, and sensor readings are uncalibrated.": "Radiosonde (palloni meteorologici) ricevute nelle ultime tre ore da stazioni volontarie, da SondeHub, disegnate alla quota riportata. I servizi meteorologici le lanciano due volte al giorno, per lo più verso le 00:00 e le 12:00 UTC. Selezionane una per le sue letture e la traiettoria e l’atterraggio previsti da SondeHub. La copertura è solo dove ascoltano i volontari e le letture dei sensori non sono calibrate.",
+  "radiosonde": "radiosonda",
+  "Weather Balloons": "Palloni meteorologici"
 }

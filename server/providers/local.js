@@ -40,6 +40,7 @@ import { inaturalistProxy } from './inaturalist/observations.js';
 import { acartiaProxy } from './acartia.js';
 import { cycloneProxy } from './cyclones.js';
 import { fireballsProxy } from './fireballs.js';
+import { sondehubProxy } from './sondehub.js';
 import { windProxy } from './wind.js';
 import { libraryProxy } from './library.js';
 import { layerCountsEndpoint } from './common/layerCounts.js';
@@ -109,6 +110,7 @@ function localProviderPlugins({
     acartiaProxy(),
     layerCountsEndpoint(countReaders),
     fireballsProxy(),
+    sondehubProxy(),
     keySetupEndpoint(),
   ];
 }

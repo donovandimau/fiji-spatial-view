@@ -4581,5 +4581,22 @@
   "Fireball {time}": "火流星 {time}",
   "Bright meteors and bolides detected by U.S. Government sensors since 1988, from NASA/JPL CNEOS, drawn where each was brightest (at that height when known) and sized by estimated impact energy. Events are posted days to weeks after they happen, and many smaller fireballs are never reported.": "自 1988 年以來美國政府傳感器探測到的明亮流星和火流星，數據來自 NASA/JPL CNEOS。繪製於最亮處（已知時按該高度），大小按估計撞擊能量。事件在發生數天至數週後發布，許多較小的火流星從未被報告。",
   "Fireballs": "火流星",
-  "fireball": "火流星"
+  "fireball": "火流星",
+  "Rising": "上升中",
+  "Falling": "下降中",
+  "Not heard for 15+ min": "15 分鐘以上未收到",
+  "Altitude {km} km": "高度 {km} 公里",
+  "Rising {rate} m/s": "上升 {rate} 米/秒",
+  "Falling {rate} m/s": "下降 {rate} 米/秒",
+  "Drifting {speed} km/h": "漂移 {speed} 公里/小時",
+  "Temperature {temp} °C": "溫度 {temp} °C",
+  "Humidity {humidity}%": "溼度 {humidity}%",
+  "Pressure {hpa} hPa": "氣壓 {hpa} hPa",
+  "Last heard {time} UTC": "最後接收 {time} UTC",
+  "Predicted landing {time} UTC": "預計著陸 {time} UTC",
+  "Radiosonde {serial}": "探空儀 {serial}",
+  "Reconnecting to the live feed": "正在重新連接實時數據",
+  "Radiosondes (weather balloons) heard in the last three hours by volunteer receiving stations, from SondeHub, drawn at their reported altitude. National weather services launch them twice a day, mostly near 00:00 and 12:00 UTC. Select one for its readings and SondeHub’s predicted path and landing. Coverage is only where volunteers listen, and sensor readings are uncalibrated.": "過去三小時內由志願者接收站收到的探空儀（氣象氣球），數據來自 SondeHub，按報告高度繪製。各國氣象部門每天施放兩次，多在 00:00 和 12:00 UTC 前後。選中一個可查看其讀數及 SondeHub 預測的路徑和著陸點。僅在有志願者接收的地區有覆蓋，傳感器讀數未經校準。",
+  "radiosonde": "探空儀",
+  "Weather Balloons": "氣象氣球"
 }

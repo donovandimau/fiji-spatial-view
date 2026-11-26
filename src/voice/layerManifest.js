@@ -497,6 +497,7 @@ export const VOICE_OFF_LAYERS = Object.freeze({
   shipwrecks: 'historical shipwreck archive; no room in the prompt budget',
   aurora: 'space-weather forecast layer; no room in the prompt budget',
   fireballs: 'meteor event archive; no room in the prompt budget',
+  radiosondes: 'weather balloon tracker; no room in the prompt budget',
   news: 'browsed in the News panel; voice tools are a later step',
   'wildlife-sightings':
     'community observation layer; no room in the prompt budget',
