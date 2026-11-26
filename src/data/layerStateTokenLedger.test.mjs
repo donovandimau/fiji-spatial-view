@@ -474,7 +474,7 @@ test('checker reads a complete future base ledger and rejects retired-token reus
     {
       rows: [...reservationRows, ['retired-layer', '08']],
       source:
-        'export const LAYER_STATE_TOKEN_RESERVATIONS = Object.freeze({ ["retired-layer"]: "04" });\n',
+        'export const LAYER_STATE_TOKEN_RESERVATIONS = Object.freeze({ ["retired-layer"]: "08" });\n',
     },
     (cwd) => {
       const published = readPublishedLayerStateReservations('HEAD', cwd);
