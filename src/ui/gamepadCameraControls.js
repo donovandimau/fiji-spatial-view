@@ -1,4 +1,8 @@
 import { interruptCameraMotion } from '../cameraVerbs.js';
+import { isFollowing } from '../data/followed.js';
+import { stepLonLat } from '../handControl/cameraDriver.js';
+import { governorRequestRender } from '../renderGovernor.js';
+import { canvasOf, findCamera } from '../render/rendererOf.js';
 
 const POLL_INTERVAL_MS = 16;
 const AXIS_DEADZONE = 0.18;
@@ -8,6 +12,9 @@ const PAN_SPEED_BY_ALTITUDE = 0.6;
 const ROTATION_SPEED_RAD_S = 1;
 const ZOOM_SPEED_BY_ALTITUDE = 0.8;
 const MIN_CAMERA_HEIGHT_M = 120;
+const MAX_CAMERA_HEIGHT_M = 40_000_000;
+const PITCH_MIN_RAD = (-89 * Math.PI) / 180;
+const PITCH_MAX_RAD = (-5 * Math.PI) / 180;
 const CONTROL_KEYS = new Set([
   'w',
   'a',
@@ -78,11 +85,16 @@ export function installGamepadCameraControls(
     navigatorRef = globalThis.navigator,
     now = () => globalThis.performance.now(),
     interrupt = interruptCameraMotion,
+    cameraFor = findCamera,
+    canvasFor = canvasOf,
+    following = isFollowing,
+    requestRender = () => governorRequestRender('gamepad-controls'),
   } = {},
 ) {
-  const canvas = viewer?.scene?.canvas;
-  // Renderers without a Cesium canvas and camera get no globe navigation.
-  if (!canvas || !viewer?.camera) return () => {};
+  // Through the renderer's ports, so any globe renderer can be steered; a
+  // host without a canvas or camera gets no keyboard or gamepad navigation.
+  const canvas = canvasFor(viewer);
+  if (!canvas || !cameraFor(viewer)) return () => {};
 
   const originalTabIndex = canvas.tabIndex;
   if (canvas.tabIndex < 0) canvas.tabIndex = 0;
@@ -172,46 +184,54 @@ export function installGamepadCameraControls(
       input[name] = Math.max(-1, Math.min(1, input[name]));
 
     const active = Object.values(input).some((value) => value !== 0);
-    if (active && !wasActive && !viewer.trackedEntity) {
+    const camera = cameraFor(viewer);
+    const busy = !camera || following(viewer);
+    if (active && !wasActive && !busy) {
       interrupt('manual-input');
-      viewer.camera.cancelFlight?.();
+      camera.cancelFlight?.();
     }
-    wasActive = active && !viewer.trackedEntity;
+    wasActive = active && !busy;
 
-    if (active && !viewer.trackedEntity) {
-      const camera = viewer.camera;
-      // The map renderers without a Cesium camera have nothing to steer.
-      if (typeof camera?.moveRight !== 'function') return;
-      const height = Math.max(
-        MIN_CAMERA_HEIGHT_M,
-        camera.positionCartographic?.height || MIN_CAMERA_HEIGHT_M,
-      );
+    if (active && !busy) {
+      const pose = camera.pose();
+      const height = Math.max(MIN_CAMERA_HEIGHT_M, pose.height || 0);
       const panSpeed = Math.min(
         MAX_PAN_SPEED_MPS,
         Math.max(MIN_PAN_SPEED_MPS, height * PAN_SPEED_BY_ALTITUDE),
       );
-      if (input.panX) camera.moveRight(input.panX * panSpeed * dt);
-      if (input.panY) camera.moveDown(input.panY * panSpeed * dt);
-      if (input.orbitX)
-        camera.rotateLeft(-input.orbitX * ROTATION_SPEED_RAD_S * dt);
-      if (input.orbitY)
-        camera.rotateUp(-input.orbitY * ROTATION_SPEED_RAD_S * dt);
-      if (input.zoom) {
-        let zoomDistance =
-          Math.max(MIN_PAN_SPEED_MPS, height * ZOOM_SPEED_BY_ALTITUDE) *
-          Math.abs(input.zoom) *
-          dt;
-        if (input.zoom > 0 && camera.pitch < 0)
-          zoomDistance = Math.min(
-            zoomDistance,
-            Math.max(0, height - MIN_CAMERA_HEIGHT_M),
-          );
-        if (zoomDistance > 0) {
-          if (input.zoom > 0) camera.moveForward(zoomDistance);
-          else camera.moveBackward(zoomDistance);
-        }
-      }
-      viewer.scene.requestRender?.();
+      // The stick's up (negative Y) slides forward along the view's heading.
+      const rightM = input.panX * panSpeed * dt;
+      const forwardM = -input.panY * panSpeed * dt;
+      const heading = pose.heading + input.orbitX * ROTATION_SPEED_RAD_S * dt;
+      const pitch = Math.min(
+        PITCH_MAX_RAD,
+        Math.max(
+          PITCH_MIN_RAD,
+          pose.pitch - input.orbitY * ROTATION_SPEED_RAD_S * dt,
+        ),
+      );
+      const east =
+        rightM * Math.cos(pose.heading) + forwardM * Math.sin(pose.heading);
+      const north =
+        -rightM * Math.sin(pose.heading) + forwardM * Math.cos(pose.heading);
+      const next =
+        east || north
+          ? stepLonLat(pose.lon, pose.lat, east, north)
+          : { lon: pose.lon, lat: pose.lat };
+      // Triggers zoom by a share of the height, so the pace feels the same
+      // from orbit to street level.
+      const nextHeight = Math.min(
+        MAX_CAMERA_HEIGHT_M,
+        Math.max(
+          MIN_CAMERA_HEIGHT_M,
+          height * Math.exp(-input.zoom * ZOOM_SPEED_BY_ALTITUDE * dt),
+        ),
+      );
+      camera.setView({
+        destination: { lon: next.lon, lat: next.lat, height: nextHeight },
+        orientation: { heading, pitch, roll: pose.roll || 0 },
+      });
+      requestRender();
     }
 
     if (!pad && keys.size === 0) stopPolling();

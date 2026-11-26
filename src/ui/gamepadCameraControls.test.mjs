@@ -43,39 +43,26 @@ function gamepadFixture() {
   windowRef.clearInterval = (id) => intervals.delete(id);
   const cameraCalls = [];
   const camera = {
-    pitch: -0.5,
-    positionCartographic: { height: 10_000 },
+    view: {
+      lon: 0,
+      lat: 0,
+      height: 10_000,
+      heading: 0,
+      pitch: -0.5,
+      roll: 0,
+    },
+    pose() {
+      return { ...this.view };
+    },
     cancelFlight() {
       cameraCalls.push(['cancelFlight']);
     },
-    moveRight(distance) {
-      cameraCalls.push(['moveRight', distance]);
-    },
-    moveDown(distance) {
-      cameraCalls.push(['moveDown', distance]);
-    },
-    rotateLeft(angle) {
-      cameraCalls.push(['rotateLeft', angle]);
-    },
-    rotateUp(angle) {
-      cameraCalls.push(['rotateUp', angle]);
-    },
-    moveForward(distance) {
-      cameraCalls.push(['moveForward', distance]);
-    },
-    moveBackward(distance) {
-      cameraCalls.push(['moveBackward', distance]);
+    setView({ destination, orientation }) {
+      cameraCalls.push(['setView', { ...destination, ...orientation }]);
+      Object.assign(this.view, destination, orientation);
     },
   };
-  const viewer = {
-    camera,
-    scene: {
-      canvas,
-      requestRender() {
-        cameraCalls.push(['requestRender']);
-      },
-    },
-  };
+  const viewer = {};
   let time = 1000;
   const gamepads = [];
   const dispose = installGamepadCameraControls(viewer, {
@@ -84,8 +71,13 @@ function gamepadFixture() {
     navigatorRef: { getGamepads: () => gamepads },
     now: () => time,
     interrupt: (reason) => cameraCalls.push(['interrupt', reason]),
+    cameraFor: () => camera,
+    canvasFor: () => canvas,
+    following: () => false,
+    requestRender: () => cameraCalls.push(['requestRender']),
   });
   return {
+    camera,
     cameraCalls,
     canvas,
     dispose,
@@ -125,16 +117,17 @@ test('a connected Xbox controller pans, orbits, and zooms the camera', () => {
   const tick = [...f.intervals.values()][0];
   assert.equal(typeof tick, 'function');
   tick();
-  assert.deepEqual(
-    f.cameraCalls.filter(([name]) => name !== 'requestRender'),
-    [
-      ['interrupt', 'manual-input'],
-      ['cancelFlight'],
-      ['moveRight', 100],
-      ['rotateLeft', 1 / 60],
-      ['moveForward', 133.33333333333334],
-    ],
-  );
+  const calls = f.cameraCalls.filter(([name]) => name !== 'requestRender');
+  assert.deepEqual(calls.slice(0, 2), [
+    ['interrupt', 'manual-input'],
+    ['cancelFlight'],
+  ]);
+  const [, view] = calls[2];
+  // Left stick right: east along a north heading. Right stick left: the
+  // heading turns. Right trigger: closer to the ground.
+  assert.ok(view.lon > 0 && Math.abs(view.lat) < 1e-9);
+  assert.ok(Math.abs(view.heading + 1 / 60) < 1e-12);
+  assert.ok(view.height < 10_000 && view.height > 120);
   assert.ok(f.cameraCalls.some(([name]) => name === 'requestRender'));
   f.dispose();
 });
@@ -154,11 +147,8 @@ test('keyboard input is enabled only on the focused globe and cleans up', () => 
   });
   const tick = [...f.intervals.values()][0];
   tick();
-  assert.ok(
-    f.cameraCalls.some(
-      ([name, distance]) => name === 'moveDown' && distance < 0,
-    ),
-  );
+  // W slides forward: north along a north heading.
+  assert.ok(f.camera.view.lat > 0);
   f.dispose();
   assert.equal(f.canvas.tabIndex, -1);
   assert.equal(f.canvas.listenerCount(), 0);

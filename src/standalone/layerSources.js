@@ -26,6 +26,7 @@ import { createGhostMapsSource } from '../layers/ghostMaps/source.js';
 import { createNewsSource } from '../layers/news/source.js';
 import { createShipwrecksSource } from '../layers/shipwrecks/source.js';
 import { createFireballSource } from '../layers/fireballs/source.js';
+import { createEclipseElementsSource } from '../layers/eclipses/source.js';
 import { createMapillarySource } from '../layers/streetLevel/providers/mapillary/source.js';
 import { createReferenceSources } from '../sources/reference.js';
 import { createLocalAirQualityFieldSource } from '../layers/airQuality/fieldSource.js';
@@ -75,6 +76,7 @@ export function createStandaloneLayerSources(
     shipwrecks: createShipwrecksSource(),
     // Same-origin /api/fireballs: JPL serves no CORS headers.
     fireballs: createFireballSource(),
+    'eclipse-paths': createEclipseElementsSource(),
     wind: createWindSource(),
     weather: createWeatherSource(),
     cyclones: createCycloneSource(),

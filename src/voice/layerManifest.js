@@ -525,6 +525,8 @@ export const VOICE_OFF_LAYERS = Object.freeze({
   fireballs: 'meteor event archive; no room in the prompt budget',
   radiosondes: 'weather balloon tracker; no room in the prompt budget',
   news: 'browsed in the News panel; voice tools are a later step',
+  // Same budget: the eclipse catalogue waits for room too.
+  'eclipse-paths': 'solar eclipse paths; no room in the prompt budget',
   'wildlife-sightings':
     'community observation layer; no room in the prompt budget',
   rail: 'train layer; no room in the prompt budget, and "trains" still names transit',

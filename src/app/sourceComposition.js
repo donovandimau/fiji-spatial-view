@@ -53,6 +53,7 @@ export const CATALOG_SOURCE_CONTRACTS = Object.freeze({
   's2-ghostmaps': contract(['s2-ghostmaps'], ['getCatalog', 'getFile']),
   shipwrecks: contract(['shipwrecks'], ['getSnapshot']),
   fireballs: contract(['fireballs'], ['getSnapshot']),
+  'eclipse-paths': contract(['eclipse-paths'], ['getCatalog']),
   'drone-airspace': contract(['drone-airspace'], ['getSnapshot']),
   news: contract(['news'], ['getHotspots', 'getFeed', 'getOutline']),
   'wildlife-sightings': contract(['wildlife-sightings'], ['getSnapshot']),

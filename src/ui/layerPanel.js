@@ -81,6 +81,7 @@ const PANEL_GROUPS = [
       's2-ghostmaps',
       'shipwrecks',
       'fireballs',
+      'eclipse-paths',
       'news',
     ],
   },
