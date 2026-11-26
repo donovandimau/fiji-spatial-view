@@ -44,6 +44,7 @@ import { sondehubProxy } from './sondehub.js';
 import { windProxy } from './wind.js';
 import { libraryProxy } from './library.js';
 import { layerCountsEndpoint } from './common/layerCounts.js';
+import { oceanCurrentsProxy } from './oceanCurrents.js';
 
 /**
  * Construct the local provider plugins in their established order.
@@ -94,6 +95,7 @@ function localProviderPlugins({
     ...(gemini ? [geminiLiveProxy({ realtime: gemini })] : []),
     googlePlacesContextProxy(),
     windProxy(),
+    oceanCurrentsProxy(),
     weatherProxy(),
     cycloneProxy(),
     openAqProxy(),

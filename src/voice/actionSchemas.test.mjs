@@ -66,7 +66,7 @@ test('the complete Realtime tool payload pins the manifest-generated layer relea
     // Fire Perimeters queries add lastGrowthTime.
     // The dock's Location and Visual Presets trays leave set_panel_open's
     // targets; Visual (pp-toggles) takes the presets' and map sources' names.
-    'b53d64dbd40651a5ba1f345195f031507f60b7e48b43c4a8a480446e0e880266',
+    '02c6dc0e29891cc557b20cc491c6c4b8e74edca093e0270ff7b147f3f8c85d4a',
   );
 });
 

@@ -19,3 +19,4 @@
 *.wav binary
 *.pbf binary
 *.u16 binary
+*.bin binary

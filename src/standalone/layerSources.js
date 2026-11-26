@@ -21,6 +21,7 @@ import { createCycloneSource } from '../layers/cyclones/source.js';
 import { createAuroraSource } from '../layers/aurora/source.js';
 import { createSondeSource } from '../layers/radiosondes/source.js';
 import { createWindSource } from '../layers/wind/source.js';
+import { createOceanCurrentsSource } from '../layers/oceanCurrents/source.js';
 import { createFirmsSource } from '../layers/firms/source.js';
 import { createGhostMapsSource } from '../layers/ghostMaps/source.js';
 import { createNewsSource } from '../layers/news/source.js';
@@ -78,6 +79,7 @@ export function createStandaloneLayerSources(
     fireballs: createFireballSource(),
     'eclipse-paths': createEclipseElementsSource(),
     wind: createWindSource(),
+    oceanCurrents: createOceanCurrentsSource(),
     weather: createWeatherSource(),
     cyclones: createCycloneSource(),
     // NOAA SWPC answers browsers directly, keyless.
