@@ -1,4 +1,4 @@
-// Build small glTF/3D Tiles descriptors next to a local, Y-up SPZ v2 scan.
+// Build small glTF/3D Tiles descriptors next to a local, Y-up SPZ v2/v3 scan.
 import { readFile, writeFile } from "node:fs/promises";
 import { basename, dirname, join } from "node:path";
 import { gunzipSync } from "node:zlib";
@@ -10,8 +10,8 @@ if (!file || !/^[\w-]+\.spz$/.test(basename(file)) || !(radius > 0))
   );
 const bytes = await readFile(file),
   header = gunzipSync(bytes);
-if (header.readUInt32LE(0) !== 0x5053474e || header.readUInt32LE(4) !== 2)
-  throw Error("Expected gzip-compressed SPZ version 2");
+if (header.readUInt32LE(0) !== 0x5053474e || ![2, 3].includes(header.readUInt32LE(4)))
+  throw Error("Expected gzip-compressed SPZ version 2 or 3");
 const count = header.readUInt32LE(8),
   degree = header[12];
 if (!count || degree > 3) throw Error("Invalid SPZ header");
