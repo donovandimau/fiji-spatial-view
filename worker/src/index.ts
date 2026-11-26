@@ -1,5 +1,5 @@
 import type { Env } from "./env";
-import { flights } from "./adsb";
+export { FlightFeed } from "./flight-feed";
 import { spatialObject } from "./heritage";
 export { FerryFeed } from "./ais";
 export default {
@@ -17,10 +17,9 @@ export default {
           env.FERRY_FEED.idFromName("fiji"),
         ).fetch("https://feed.local/");
       else if (url.pathname === "/adsb") {
-        const key = new Request(new URL("/adsb", url.origin));
-        const cached = await caches.default.match(key);
-        response = cached ?? (await flights(env));
-        if (!cached) ctx.waitUntil(caches.default.put(key, response.clone()));
+        response = await env.FLIGHT_FEED.get(
+          env.FLIGHT_FEED.idFromName("nadi-fir"),
+        ).fetch("https://feed.local/");
       } else response = await spatialObject(url.pathname, env);
     } catch (error) {
       if (url.pathname === "/adsb")

@@ -17,3 +17,11 @@ new_sqlite_classes = ["FerryFeed"]
 [vars]
 PAGES_ORIGIN = "https://fiji-spatial-view.pages.dev"
 FERRY_MMSIS = ""
+
+[[durable_objects.bindings]]
+name = "FLIGHT_FEED"
+class_name = "FlightFeed"
+
+[[migrations]]
+tag = "v2"
+new_sqlite_classes = ["FlightFeed"]

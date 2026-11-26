@@ -93,11 +93,31 @@ interface Aircraft {
   alt_baro?: number | "ground";
 }
 
-async function islandFlights() {
-  const res = await fetch("https://api.adsb.lol/v2/point/-17.8/178/250", {
+export interface Cooldown {
+  get(key: string): Promise<number | undefined>;
+  put(key: string, value: number): Promise<void>;
+}
+async function islandFlights(source: string, url: string, cooldown?: Cooldown) {
+  if (((await cooldown?.get(source)) ?? 0) > Date.now())
+    throw Error(source + " cooling down");
+  const res = await fetch(url, {
     signal: AbortSignal.timeout(8000),
   });
-  if (!res.ok) throw Error("adsb.lol HTTP " + res.status);
+  if (res.status === 429) {
+    const retry = res.headers.get("Retry-After");
+    const seconds = retry === null ? NaN : Number(retry);
+    const until = Number.isFinite(seconds)
+      ? Date.now() + seconds * 1000
+      : Date.parse(retry ?? "");
+    await cooldown?.put(
+      source,
+      Math.max(
+        Date.now() + 60000,
+        Number.isFinite(until) ? until : Date.now() + 900000,
+      ),
+    );
+  }
+  if (!res.ok) throw Error(source + " HTTP " + res.status);
   const data = await res.json<{ now: number; ac: Aircraft[] }>();
   const now = Date.now() / 1000;
   const stamp = data.now / 1000;
@@ -107,7 +127,7 @@ async function islandFlights() {
     stamp > now + 60 ||
     !Array.isArray(data.ac)
   ) {
-    throw Error("Invalid or stale adsb.lol snapshot");
+    throw Error("Invalid or stale " + source + " snapshot");
   }
   const rows = data.ac
     .filter((a) => Number.isFinite(a.seen_pos) && a.seen_pos! >= 0)
@@ -127,7 +147,7 @@ async function islandFlights() {
   return normalize(rows, now);
 }
 
-export async function flights(env: Env) {
+export async function flights(env: Env, cooldown?: Cooldown) {
   let tracks: Track[];
   let source = "OpenSky";
   try {
@@ -139,8 +159,25 @@ export async function flights(env: Env) {
         ? error.name + ": " + error.message
         : "Unknown failure",
     );
-    tracks = await islandFlights();
-    source = "adsb.lol";
+    try {
+      tracks = await islandFlights(
+        "adsb.lol",
+        "https://api.adsb.lol/v2/point/-17.8/178/250",
+        cooldown,
+      );
+      source = "adsb.lol";
+    } catch (error) {
+      console.warn(
+        "Fiji regional feed unavailable",
+        error instanceof Error ? error.message : "unknown",
+      );
+      source = "adsb.fi";
+      tracks = await islandFlights(
+        source,
+        "https://opendata.adsb.fi/api/v3/lat/-17.8/lon/178/dist/250",
+        cooldown,
+      );
+    }
   }
   return Response.json(tracks, {
     headers: {

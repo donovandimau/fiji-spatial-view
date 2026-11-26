@@ -11,7 +11,7 @@ export async function getJson<T>(
   });
   if (!response.ok)
     throw Error(
-      response.status === 503 || response.status === 404
+      (response.status === 503 && path !== "adsb") || response.status === 404
         ? "Dataset is not configured"
         : "Data provider unavailable",
     );
@@ -24,17 +24,27 @@ export async function tracks(ctx: LayerContext, path: string, color: string) {
   let disposed = false;
   let records: Track[] = [];
   async function refresh() {
+    let delayed = false;
+    let snapshot = "";
     let provider: string | null = null;
     records = await getJson<Track[]>(ctx, path, (r) => {
       provider = r.headers.get("X-Flight-Source");
+      delayed = r.headers.get("X-Flight-Delayed") === "true";
+      snapshot = r.headers.get("X-Flight-Snapshot")?.slice(11, 16) ?? "";
     });
     ctx.signal.throwIfAborted();
     if (path === "adsb" && provider) {
       const area =
-        provider === "adsb.lol" ? "250 NM around Viti Levu" : "Nadi FIR";
+        provider !== "OpenSky" ? "250 NM around Viti Levu" : "Nadi FIR";
       window.dispatchEvent(
         new CustomEvent("spatial-status", {
-          detail: records.length + " aircraft · " + area + " · " + provider,
+          detail:
+            records.length +
+            " aircraft · " +
+            area +
+            " · " +
+            provider +
+            (delayed ? " · last update " + snapshot + " UTC" : ""),
         }),
       );
     }

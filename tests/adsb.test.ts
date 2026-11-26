@@ -70,5 +70,34 @@ test("failed providers do not produce an empty success", async (t) => {
     "fetch",
     async () => new Response(null, { status: 503 }),
   );
-  await assert.rejects(flights({}), /adsb.lol HTTP 503/);
+  await assert.rejects(flights({}), /adsb.fi HTTP 503/);
+});
+
+test("429 cooldown skips the exhausted provider and uses a fresh regional snapshot", async (t) => {
+  const { flights } = await import("../worker/src/adsb.ts");
+  const storage = new Map<string, number>();
+  const cooldown = {
+    get: async (k: string) => storage.get(k),
+    put: async (k: string, v: number) => {
+      storage.set(k, v);
+    },
+  };
+  let limited = 0;
+  t.mock.method(globalThis, "fetch", async (url) => {
+    if (String(url).includes("opensky-network")) throw new Error("timeout");
+    if (String(url).includes("adsb.lol")) {
+      limited++;
+      return new Response(null, {
+        status: 429,
+        headers: { "Retry-After": "3600" },
+      });
+    }
+    return Response.json({ now: Date.now(), ac: [] });
+  });
+  for (let i = 0; i < 2; i++) {
+    const r = await flights({}, cooldown);
+    assert.equal(r.headers.get("X-Flight-Source"), "adsb.fi");
+    assert.deepEqual(await r.json(), []);
+  }
+  assert.equal(limited, 1);
 });
