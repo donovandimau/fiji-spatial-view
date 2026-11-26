@@ -97,19 +97,6 @@ const layers = [
     noQuery: 'raster tile overlay; no countable records',
   },
   {
-    id: 'cycling',
-    aliases: [
-      'cycling',
-      'cycling routes',
-      'bike routes',
-      'cycle routes',
-      'eurovelo',
-      'rattateed',
-    ],
-    context: false,
-    noQuery: 'raster tile overlay; no countable records',
-  },
-  {
     id: 'flights',
     track: true,
     aliases: ['planes', 'aircraft', 'air traffic'],
@@ -300,18 +287,6 @@ const layers = [
   {
     id: 'wind',
     aliases: ['winds', 'wind map'],
-    context: false,
-    noQuery: 'map overlay; no countable records',
-  },
-  {
-    id: 'ocean-currents',
-    aliases: [
-      'ocean currents',
-      'currents',
-      'current field',
-      'surface currents',
-      'sea currents',
-    ],
     context: false,
     noQuery: 'map overlay; no countable records',
   },
@@ -539,6 +514,8 @@ export const VOICE_OFF_LAYERS = Object.freeze({
   news: 'browsed in the News panel; voice tools are a later step',
   // Same budget: the eclipse catalogue waits for room too.
   'eclipse-paths': 'solar eclipse paths; no room in the prompt budget',
+  cycling: 'cycling route overlay; no room in the prompt budget',
+  'ocean-currents': 'ocean current map; no room in the prompt budget',
   'wildlife-sightings':
     'community observation layer; no room in the prompt budget',
   rail: 'train layer; no room in the prompt budget, and "trains" still names transit',
@@ -646,7 +623,6 @@ const SELF_EVIDENT_IDS = new Set([
   'wind',
   'directions',
   'hiking',
-  'cycling',
 ]);
 
 /** Lower case with spaces and hyphens removed: "Data centers" → "datacenters". */

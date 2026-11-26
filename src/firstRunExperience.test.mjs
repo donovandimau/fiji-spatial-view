@@ -1111,10 +1111,10 @@ test('the voice TOOL SCHEMA matches the pinned contract — the mission mapping 
   // Fire Perimeters queries add lastGrowthTime.
   // The dock's Location and Visual Presets trays leave set_panel_open's
   // targets; Visual (pp-toggles) takes the presets' names.
-  assert.equal(block.length, 31547, 'serialized tool schema length drifted');
+  assert.equal(block.length, 31493, 'serialized tool schema length drifted');
   assert.equal(
     crypto.createHash('sha256').update(block).digest('hex'),
-    '368384334bd26745189a40ee0ef8caacaa2d09d7330ff91ec41edf14c7ed0644',
+    '9130eab60428d1bf3d1a5c0037d72f7bbffddbac8d6a08dab307e4f6a63f05d3',
     'the first-run missions must ride EXISTING tools: no schema edit, no cache bust',
   );
   const instructions = fs.readFileSync(
