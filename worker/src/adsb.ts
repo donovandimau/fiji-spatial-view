@@ -103,7 +103,8 @@ async function islandFlights(
   cooldown?: Cooldown,
   apiKey?: string,
 ) {
-  if (((await cooldown?.get(source)) ?? 0) > Date.now())
+  const quota = apiKey ? source + ":app" : source;
+  if (((await cooldown?.get(quota)) ?? 0) > Date.now())
     throw Error(source + " cooling down");
   const res = await fetch(url, {
     signal: AbortSignal.timeout(8000),
@@ -116,7 +117,7 @@ async function islandFlights(
       ? Date.now() + seconds * 1000
       : Date.parse(retry ?? "");
     await cooldown?.put(
-      source,
+      quota,
       Math.max(
         Date.now() + 60000,
         Number.isFinite(until) ? until : Date.now() + 900000,
