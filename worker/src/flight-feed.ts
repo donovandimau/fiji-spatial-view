@@ -28,6 +28,10 @@ export class FlightFeed extends DurableObject<Env> {
           throw Error("Retry pending");
         this.pending ??= this.refresh()
           .catch(async (e) => {
+            console.warn(
+              "Regional flight refresh failed",
+              e instanceof Error ? e.message : "unknown",
+            );
             await this.ctx.storage.put("retry", Date.now() + 30000);
             throw e;
           })

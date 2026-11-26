@@ -97,11 +97,17 @@ export interface Cooldown {
   get(key: string): Promise<number | undefined>;
   put(key: string, value: number): Promise<void>;
 }
-async function islandFlights(source: string, url: string, cooldown?: Cooldown) {
+async function islandFlights(
+  source: string,
+  url: string,
+  cooldown?: Cooldown,
+  apiKey?: string,
+) {
   if (((await cooldown?.get(source)) ?? 0) > Date.now())
     throw Error(source + " cooling down");
   const res = await fetch(url, {
     signal: AbortSignal.timeout(8000),
+    headers: apiKey ? { "x-api-key": apiKey } : undefined,
   });
   if (res.status === 429) {
     const retry = res.headers.get("Retry-After");
@@ -164,6 +170,7 @@ export async function flights(env: Env, cooldown?: Cooldown) {
         "adsb.lol",
         "https://api.adsb.lol/v2/point/-17.8/178/250",
         cooldown,
+        env.ADSB_LOL_API_KEY,
       );
       source = "adsb.lol";
     } catch (error) {
