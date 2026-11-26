@@ -1,0 +1,19 @@
+name = "fiji-spatial-api"
+main = "src/index.ts"
+compatibility_date = "2025-09-01"
+
+[[r2_buckets]]
+binding = "SPATIAL_DATA"
+bucket_name = "fiji-spatial-data"
+
+[[durable_objects.bindings]]
+name = "FERRY_FEED"
+class_name = "FerryFeed"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["FerryFeed"]
+
+[vars]
+PAGES_ORIGIN = "https://fiji-spatial-view.pages.dev"
+FERRY_MMSIS = ""
