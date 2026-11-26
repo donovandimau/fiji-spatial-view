@@ -7,6 +7,7 @@ import { createViewFrameRate } from '../viewFrameRate.js';
 import { findGlobe } from '../render/rendererOf.js';
 import { useDisplayStore } from '../ui/stores/display.js';
 import { applicationPinia } from '../ui/vueRuntime.js';
+import { installGamepadCameraControls } from '../ui/gamepadCameraControls.js';
 import { t } from '../i18n/index.js';
 
 /** Where the camera starts unless a host gives a `startView`. */
@@ -70,6 +71,7 @@ export function createApplicationControls({
   defer(() => styleManager.orbitController.stop());
   defer(() => styleManager.hud.destroy());
   defer(() => styleManager.dispose());
+  defer(installGamepadCameraControls(viewer));
   // The previous multi-canvas weather compositor remains disabled. Cockpit
   // clouds use a separate, capped low-resolution GPU pass that never attaches
   // Cesium fog or post-process stages and is fully stopped in map mode.

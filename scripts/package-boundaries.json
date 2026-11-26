@@ -4679,6 +4679,7 @@
       "src/app/constructCatalog.js",
       "src/app/sourceComposition.js",
       "src/app/controls.js",
+      "src/ui/gamepadCameraControls.js",
       "src/app/data.js",
       "src/ui/stores/layerFinder.js",
       "src/ui/layerFinderFilter.js",

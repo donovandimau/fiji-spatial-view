@@ -174,6 +174,11 @@ npm run dev
 Open **`http://localhost:4173`**. Choose **Space Missions**, **Environmental**,
 or **Explore Manually** from the first-run panel.
 
+**Keyboard / Xbox controller:** Click the globe to focus it. Use **WASD** or
+the controller's **left stick** to pan, **arrow keys** or the **right stick**
+to orbit, and **LT/RT** to zoom. Keyboard navigation pauses while you type in
+an app field.
+
 <details>
 <summary>Startup performance</summary>
 

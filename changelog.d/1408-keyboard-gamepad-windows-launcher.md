@@ -1,0 +1,1 @@
+- Add keyboard (WASD / arrow keys) and Xbox gamepad globe navigation (@thecathousemp3, #1408).
