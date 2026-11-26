@@ -1,0 +1,25 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "gods-eye-view",
+  "main": "cloudflare/worker.js",
+  "compatibility_date": "2026-11-26",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+  "vars": {
+    "GEV_ALLOWED_HOSTS": "gods-eye-view.donovan-dimau.workers.dev",
+  },
+  "containers": [
+    {
+      "class_name": "GlobeContainer",
+      "image": "./Dockerfile",
+      "instance_type": "standard-1",
+      "max_instances": 1,
+    },
+  ],
+  "durable_objects": {
+    "bindings": [{ "name": "GLOBE", "class_name": "GlobeContainer" }],
+  },
+  "exports": {
+    "GlobeContainer": { "type": "durable-object", "storage": "sqlite" },
+  },
+}

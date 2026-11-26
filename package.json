@@ -90,6 +90,7 @@
     "vue-i18n": "^11.4.15"
   },
   "devDependencies": {
+    "@cloudflare/containers": "^0.3.7",
     "@happy-dom/global-registrator": "^20.14.6",
     "@vitejs/plugin-vue": "^5.2.4",
     "@vue/test-utils": "^2.5.1",
@@ -102,6 +103,7 @@
     "typescript": "5.9.3",
     "vite": "^6.4.4",
     "vite-plugin-cesium": "^1.2.23",
+    "wrangler": "^4.168.0",
     "ws": "^8.21.0"
   },
   "exports": {
