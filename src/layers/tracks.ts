@@ -1,7 +1,11 @@
 import { C } from "../cesium";
 import { contains, type Track } from "../../shared/geo";
 import type { LayerContext } from "./types";
-export async function getJson<T>(ctx: LayerContext, path: string): Promise<T> {
+export async function getJson<T>(
+  ctx: LayerContext,
+  path: string,
+  onResponse?: (r: Response) => void,
+): Promise<T> {
   const response = await fetch(new URL(path, ctx.apiBase), {
     signal: ctx.signal,
   });
@@ -11,6 +15,7 @@ export async function getJson<T>(ctx: LayerContext, path: string): Promise<T> {
         ? "Dataset is not configured"
         : "Data provider unavailable",
     );
+  onResponse?.(response);
   return response.json();
 }
 export async function tracks(ctx: LayerContext, path: string, color: string) {
@@ -19,8 +24,20 @@ export async function tracks(ctx: LayerContext, path: string, color: string) {
   let disposed = false;
   let records: Track[] = [];
   async function refresh() {
-    records = await getJson<Track[]>(ctx, path);
+    let provider: string | null = null;
+    records = await getJson<Track[]>(ctx, path, (r) => {
+      provider = r.headers.get("X-Flight-Source");
+    });
     ctx.signal.throwIfAborted();
+    if (path === "adsb" && provider) {
+      const area =
+        provider === "adsb.lol" ? "250 NM around Viti Levu" : "Nadi FIR";
+      window.dispatchEvent(
+        new CustomEvent("spatial-status", {
+          detail: records.length + " aircraft · " + area + " · " + provider,
+        }),
+      );
+    }
     render();
   }
   function render() {

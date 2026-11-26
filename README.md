@@ -27,3 +27,5 @@ Use Node 24 and npm. Run `npm ci`, copy `.env.example` to `.env.local` and set t
 The plugin contract lives in `src/layers/types.ts`. Implement `activate`, observe the context AbortSignal, and return a disposable handle. Register the plugin in the array passed to the layer bar in `src/main.ts`. Browser and Worker share spatial logic in `shared/`.
 
 Run `npm test`, `npm run build`, and `npx wrangler deploy --dry-run -c worker/wrangler.toml`. Test the mobile UI with provider keys on a staging Pages origin before enabling public access. The upstream code license is retained in LICENSE. Runtime datasets are governed by their providers.
+
+When OpenSky times out or rejects a request, Flights uses the [adsb.lol public API](https://www.adsb.lol/docs/open-data/api/) under [ODbL 1.0](https://opendatacommons.org/licenses/odbl/1-0/). Fallback coverage is a 250 nautical mile radius around Viti Levu intersected with the Nadi FIR. The UI reports the active source, coverage and aircraft count. A provider outage is never converted to an empty snapshot.

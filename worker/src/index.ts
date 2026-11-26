@@ -22,7 +22,12 @@ export default {
         response = cached ?? (await flights(env));
         if (!cached) ctx.waitUntil(caches.default.put(key, response.clone()));
       } else response = await spatialObject(url.pathname, env);
-    } catch {
+    } catch (error) {
+      if (url.pathname === "/adsb")
+        console.warn(
+          "Flights fallback failed",
+          error instanceof Error ? error.message : "Unknown failure",
+        );
       response = new Response("Data provider unavailable", { status: 502 });
     }
     const headers = new Headers(response.headers);
