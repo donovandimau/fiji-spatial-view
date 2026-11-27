@@ -4,6 +4,8 @@ export interface Env {
   FERRY_FEED: DurableObjectNamespace;
   AISSTREAM_KEY?: string;
   ADSB_LOL_API_KEY?: string;
+  AIRLABS_API_KEY?: string;
+  AIRLABS_TRIAL_UNTIL?: string;
   FERRY_MMSIS?: string;
   OPENSKY_CLIENT_ID?: string;
   OPENSKY_CLIENT_SECRET?: string;

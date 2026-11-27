@@ -1,4 +1,4 @@
-import { fir, inFir } from "../../shared/fiji.ts";
+import { fir, inFir, islands } from "../../shared/fiji.ts";
 import { split, type Track } from "../../shared/geo.ts";
 import type { Env } from "./env";
 let auth: { token: string; expires: number } | undefined;
@@ -157,6 +157,28 @@ async function islandFlights(
 export async function flights(env: Env, cooldown?: Cooldown) {
   let tracks: Track[];
   let source = "OpenSky";
+  if (env.AIRLABS_API_KEY && Date.parse(env.AIRLABS_TRIAL_UNTIL ?? "") > Date.now()) {
+    const key = env.AIRLABS_API_KEY;
+    try {
+      const parts = await Promise.all(split(islands).map(async (b) => {
+        const url = new URL("https://airlabs.co/api/v9/flights");
+        url.searchParams.set("api_key", key);
+        url.searchParams.set("bbox", [b.south, b.west, b.north, b.east].join(","));
+        const res = await fetch(url, { signal: AbortSignal.timeout(7000), redirect: "error" });
+        if (!res.ok) throw Error("AirLabs unavailable");
+        const data = await res.json<{response?: {hex?: string; flight_icao?: string; updated?: number; lng?: number; lat?: number; alt?: number}[]}>();
+        if (!Array.isArray(data.response)) throw Error("Invalid AirLabs response");
+        return data.response.filter(a => typeof a.updated === "number" && a.updated <= Date.now()/1000 + 60 &&
+          typeof a.lng === "number" && a.lng >= b.west && a.lng <= b.east &&
+          typeof a.lat === "number" && a.lat >= b.south && a.lat <= b.north)
+          .map(a => [a.hex?.toLowerCase(), a.flight_icao, null, a.updated, null, a.lng, a.lat, a.alt]);
+      }));
+      const observed = normalize(parts.flat(), Date.now()/1000);
+      if (observed.length) return Response.json(observed, {headers: {"X-Flight-Source":"AirLabs","Cache-Control":"public,max-age=180"}});
+    } catch {
+      console.warn("AirLabs trial unavailable");
+    }
+  }
   try {
     tracks = await openSky(env, AbortSignal.timeout(4000));
   } catch (error) {
