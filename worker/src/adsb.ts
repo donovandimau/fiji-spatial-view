@@ -164,10 +164,11 @@ export async function flights(env: Env, cooldown?: Cooldown) {
         const url = new URL("https://airlabs.co/api/v9/flights");
         url.searchParams.set("api_key", key);
         url.searchParams.set("bbox", [b.south, b.west, b.north, b.east].join(","));
-        const res = await fetch(url, { signal: AbortSignal.timeout(7000), redirect: "error" });
-        if (!res.ok) throw Error("AirLabs unavailable");
-        const data = await res.json<{response?: {hex?: string; flight_icao?: string; updated?: number; lng?: number; lat?: number; alt?: number}[]}>();
-        if (!Array.isArray(data.response)) throw Error("Invalid AirLabs response");
+        const res = await fetch(url, { signal: AbortSignal.timeout(7000), redirect: "manual" });
+        if (!res.ok) { console.warn("AirLabs HTTP", res.status); throw Error("AirLabs unavailable"); }
+        if (!res.headers.get("content-type")?.includes("json")) { console.warn("AirLabs non-JSON response"); throw Error("AirLabs response type"); }
+        const data = await res.json<{error?: {code?: string}; response?: {hex?: string; flight_icao?: string; updated?: number; lng?: number; lat?: number; alt?: number}[]}>();
+        if (!Array.isArray(data.response)) { console.warn("AirLabs provider error", String(data.error?.code ?? "schema").replace(/[^a-z_]/gi, "").slice(0,40)); throw Error("Invalid AirLabs response"); }
         return data.response.filter(a => typeof a.updated === "number" && a.updated <= Date.now()/1000 + 60 &&
           typeof a.lng === "number" && a.lng >= b.west && a.lng <= b.east &&
           typeof a.lat === "number" && a.lat >= b.south && a.lat <= b.north)
@@ -175,8 +176,8 @@ export async function flights(env: Env, cooldown?: Cooldown) {
       }));
       const observed = normalize(parts.flat(), Date.now()/1000);
       if (observed.length) return Response.json(observed, {headers: {"X-Flight-Source":"AirLabs","Cache-Control":"public,max-age=180"}});
-    } catch {
-      console.warn("AirLabs trial unavailable");
+    } catch (error) {
+      console.warn("AirLabs trial unavailable", error instanceof Error ? error.name : "unknown");
     }
   }
   try {

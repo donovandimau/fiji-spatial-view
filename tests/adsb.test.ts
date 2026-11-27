@@ -101,3 +101,26 @@ test("429 cooldown skips the exhausted provider and uses a fresh regional snapsh
   }
   assert.equal(limited, 1);
 });
+
+test("AirLabs trial reads both Fiji boxes and keeps only recent local positions", async (t) => {
+  const { flights } = await import("../worker/src/adsb.ts");
+  const now = Math.floor(Date.now() / 1000);
+  const boxes = [];
+  t.mock.method(globalThis, "fetch", async (url) => {
+    const bbox = url.searchParams.get("bbox");
+    boxes.push(bbox);
+    const lng = bbox.startsWith("-22,-180") ? -179.5 : 178;
+    return Response.json({response: [
+      {hex: "A", flight_icao: "FJ1", updated: now - 5, lng, lat: -17, alt: 200},
+      {hex: "B", updated: now - 650, lng, lat: -17},
+      {hex: "C", updated: now, lng: 12, lat: -17},
+    ]});
+  });
+  const response = await flights({AIRLABS_API_KEY:"test", AIRLABS_TRIAL_UNTIL:new Date((now+60)*1000).toISOString()});
+  assert.deepEqual(boxes.sort(), ["-22,-180,-12,-178", "-22,176,-12,180"]);
+  assert.equal(response.headers.get("X-Flight-Source"), "AirLabs");
+  const [track, ...others] = await response.json();
+  assert.equal(track.label, "FJ1");
+  assert.equal(track.time, now - 5);
+  assert.equal(others.length, 0);
+});
